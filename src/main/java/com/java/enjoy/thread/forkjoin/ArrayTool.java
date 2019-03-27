@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class ArrayTool {
 
-    static final int ARRAY_SIZE = 4000000;
+    static final int ARRAY_SIZE = 100000000;
 
     /**
      * 初始化数组值
