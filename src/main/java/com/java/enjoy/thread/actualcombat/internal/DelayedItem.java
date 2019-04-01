@@ -8,14 +8,18 @@ import java.util.concurrent.TimeUnit;
  * Date: 2019/03/28
  * Description: 超时对象
  */
-public class DelayedItem<T> implements Delayed {
+public class DelayedItem<Data> implements Delayed {
 
+    // 活跃时长
     private long activeTime;
-    private T data;
+    // 超时时间
+    private long expireTime;
+    private Data data;
 
-    public DelayedItem(long activeTime, T data) {
+    public DelayedItem(long activeTime, Data data) {
         // 超时时间是纳秒级别
-        this.activeTime = TimeUnit.NANOSECONDS.convert(activeTime, TimeUnit.MILLISECONDS) + activeTime;
+        this.activeTime = activeTime;
+        this.expireTime = TimeUnit.NANOSECONDS.convert(activeTime, TimeUnit.MILLISECONDS) + System.nanoTime();
         this.data = data;
     }
 
@@ -23,13 +27,13 @@ public class DelayedItem<T> implements Delayed {
         return activeTime;
     }
 
-    public T getData() {
+    public Data getData() {
         return data;
     }
 
     @Override
     public long getDelay(TimeUnit unit) {
-        return unit.convert(this.activeTime - System.nanoTime(), TimeUnit.NANOSECONDS);
+        return unit.convert(this.expireTime - System.nanoTime(), TimeUnit.NANOSECONDS);
     }
 
     @Override

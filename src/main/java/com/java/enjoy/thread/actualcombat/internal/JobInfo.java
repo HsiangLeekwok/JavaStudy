@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Date: 2019/03/28
  * Description: 任务实体类
  */
-public class JobInfo<R> {
+public class JobInfo<Result> {
     // 任务名称
     private final String jobName;
     // 任务长度
@@ -22,7 +22,7 @@ public class JobInfo<R> {
     // 已经处理的任务个数
     private final AtomicInteger processedCount;
     // 结果队列，从头开始拿
-    private final LinkedBlockingQueue<TaskResult<R>> blockingQueue;
+    private final LinkedBlockingQueue<TaskResult<Result>> results;
     // 超时时间
     private final long expireTime;
 
@@ -33,7 +33,7 @@ public class JobInfo<R> {
         this.expireTime = expireTime;
         this.successCount = new AtomicInteger(0);
         this.processedCount = new AtomicInteger(0);
-        this.blockingQueue = new LinkedBlockingQueue<>(jobLength);
+        this.results = new LinkedBlockingQueue<>(jobLength);
     }
 
     public ITaskProcessor<?, ?> getTaskProcessor() {
@@ -61,12 +61,17 @@ public class JobInfo<R> {
     }
 
     // 获取工作中每个任务的处理详情
-    public List<TaskResult<R>> getTaskDetail() {
-        List<TaskResult<R>> list = new LinkedList<>();
-        TaskResult<R> result;
-        while ((result = blockingQueue.poll()) != null) {
+    public List<TaskResult<Result>> getTaskDetail() {
+        List<TaskResult<Result>> list = new LinkedList<>();
+        TaskResult<Result> result;
+        while ((result = results.poll()) != null) {
             list.add(result);
         }
         return list;
+    }
+
+    // 加入处理结果到队列
+    public void addTaskResult(TaskResult<Result> result) {
+        results.add(result);
     }
 }

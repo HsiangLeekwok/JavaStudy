@@ -55,6 +55,7 @@ public class PendingJobPool {
             this.data = data;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void run() {
             IProcessor<T> processor = (IProcessor<T>) jobInfo.getProcessor();
@@ -117,8 +118,5 @@ public class PendingJobPool {
             throw new NullPointerException("No job named: " + jobName);
         }
         return job.getSuccess();
-    }
-
-    private static class ExpireCheckProcessor {
     }
 }

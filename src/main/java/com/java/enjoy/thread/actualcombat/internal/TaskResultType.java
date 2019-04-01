@@ -11,5 +11,5 @@ public enum TaskResultType {
     // 任务执行失败
     FAILURE,
     // 任务执行异常
-    EXCEPTION
+    EXCEPTION;
 }

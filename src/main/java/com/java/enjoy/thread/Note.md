@@ -170,20 +170,20 @@ ConcurrentLinkedQueue
 |检查方法|element|peek|-|-|
 	
 	常用阻塞队列：
-		ArrayBlockingQueue：一个由数组结构组成的有界阻塞队列。按照FIFO原则，要求设定初始大小
-		LinkedBlockingQueue：一个由链表结构组成的有界阻塞队列。按照FIFO原则可以不设定初始大小
+		ArrayBlockingQueue：一个由数组结构组成的[有界]阻塞队列。按照FIFO原则，要求设定初始大小
+		LinkedBlockingQueue：一个由链表结构组成的[有界]阻塞队列。按照FIFO原则可以不设定初始大小
 		    两者不同：
 		        1、锁上面，Array只有一个锁，Link用了两个锁
 		        2、实现上：Array直接插入元素，Link需要转换
 		        
-		PriorityBlockingQueue：一个支持优先级排序的无界阻塞队列。
+		PriorityBlockingQueue：一个支持优先级排序的[无界]阻塞队列。
 		    默认情况下，按照自然顺序排序；或者实现 CompareTo()方法，或者指定构造参数Comparator来指定排序
 		    同优先级元素的顺序是随机的
-		DelayQueue：一个使用优先级队列实现的无解阻塞队列。支持延时获取元素的阻塞队列，元素必须要实现 Delayed 接口
+		DelayQueue：一个使用优先级队列实现的[无界]阻塞队列。支持延时获取元素的阻塞队列，元素必须要实现 Delayed 接口
 		    如：缓存系统、订单到期、先期支付等
 		SynchronousQueue：一个不存储元素的阻塞队列。
 		    每一个 put 操作都要等待一个 take 操作
-		LinkedTransferQueue：一个由链表结构组成的无解阻塞队列。
+		LinkedTransferQueue：一个由链表结构组成的[无界]阻塞队列。
 		    transfer(), tryTransfer()：插入的时候看是否有消费者在等待，如果有则直接交给消费者，否则再插入队列。
 		        区别：
 		            transfer()必须要消费者消费了以后才会返回
